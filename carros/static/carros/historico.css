@@ -1,0 +1,263 @@
+/* Resetando estilos padrões */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Definindo fonte padrão */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    padding-top: 120px; /* Ajustando para não cobrir o conteúdo pelo cabeçalho fixo */
+}
+
+/* Cabeçalho e Barra de Navegação ocupando o topo */
+header#inicio {
+    background-color: #007a6a; /* Cor principal */
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px; /* Ajuste no padding */
+    margin: 0; /* Removendo margens */
+    position: fixed; /* Fixa o cabeçalho no topo da página */
+    top: 0; /* Fixa no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Ocupa toda a largura da tela */
+    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
+    height: 80px; /* Ajustando altura */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header#inicio h1 {
+    font-size: 1.8em; /* Ajustando o tamanho da fonte */
+    font-weight: 700;
+}
+
+/* Barra de Navegação */
+nav.navbar {
+    background-color: #007a6a; /* Cor de fundo da navegação */
+    border-radius: 0 0 5px 5px; /* Bordas arredondadas nas partes inferiores */
+    overflow: hidden;
+    position: fixed; /* Fixa a barra de navegação logo abaixo do cabeçalho */
+    top: 80px; /* Ajusta para ficar abaixo do cabeçalho */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Ocupa toda a largura da tela */
+    height: 50px; /* Altura ajustada */
+    z-index: 999; /* Fica abaixo do cabeçalho */
+}
+
+nav.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+nav.navbar ul li {
+    margin: 0;
+}
+
+nav.navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 15px; /* Ajustado o padding */
+    display: flex; /* Usando flexbox para melhor alinhamento */
+    align-items: center; /* Alinhando o texto verticalmente */
+    height: 100%;
+    font-size: 1em; /* Ajustando o tamanho da fonte */
+    transition: background-color 0.3s ease;
+}
+
+nav.navbar ul li a:hover {
+    background-color: #45d0bd; /* Cor do hover */
+}
+
+/* Barra de Pesquisa */
+#barra-pesquisa {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#barra-pesquisa form {
+    display: inline-block;
+}
+
+#barra-pesquisa input[type="text"] {
+    padding: 10px;
+    width: 250px; /* Ajuste no tamanho do campo */
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#barra-pesquisa button {
+    padding: 10px 15px; /* Ajuste no padding */
+    background-color: #009d88; /* Cor do botão de pesquisa */
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#barra-pesquisa button:hover {
+    background-color: #45d0bd; /* Cor do hover do botão */
+}
+
+/* Tutorial */
+#tutorial {
+    background-color: #fff;
+    padding: 30px; /* Aumentado o padding para um maior espaçamento interno */
+    border-radius: 8px; /* Bordas mais arredondadas para um design mais suave */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra mais suave e visível */
+    margin-top: 150px; /* Ajusta a margem superior para compensar o cabeçalho fixo */
+    width: 80%; /* Reduzindo a largura do tutorial */
+    max-width: 800px; /* Largura máxima para garantir que não ocupe muito espaço */
+    margin: 30px auto; /* Centralizando o tutorial na tela */
+}
+
+#tutorial h2 {
+    font-size: 2em; /* Aumentando o tamanho do título */
+    margin-bottom: 20px;
+    text-align: center; /* Centralizando o título */
+    font-weight: 700;
+    color: #007a6a; /* Cor do título */
+}
+
+#tutorial p {
+    font-size: 1.1em; /* Ajuste na fonte para facilitar a leitura */
+    line-height: 1.8; /* Melhor espaçamento entre as linhas de texto */
+    margin-bottom: 20px; /* Espaçamento entre os parágrafos */
+    color: #555; /* Cor do texto ajustada para um tom mais suave */
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    #tutorial {
+        padding: 20px; /* Reduzindo o padding em telas menores */
+        width: 90%; /* Ampliando a largura em telas pequenas */
+    }
+
+    #tutorial h2 {
+        font-size: 1.6em; /* Ajustando o tamanho do título em telas menores */
+    }
+
+    #tutorial p {
+        font-size: 1em; /* Ajustando o tamanho da fonte para maior legibilidade */
+    }
+}
+
+/* Lista de Compras */
+#lista-compras {
+    margin-top: 20px;
+}
+
+#lista-compras h2 {
+    font-size: 1.8em; /* Ajuste no tamanho do título */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Estilo dos Cards */
+.compra-item {
+    background-color: #fff;
+    padding: 10px; /* Diminuído o padding */
+    border-radius: 5px;
+    margin-bottom: 10px; /* Diminuindo a margem entre os cards */
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); /* Ajustando o sombreamento */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 80%; /* Limitando a largura do card */
+    max-width: 300px; /* Largura máxima para o card */
+    margin: 10px auto; /* Centralizando os cards */
+}
+
+.compra-item:hover {
+    transform: translateY(-5px); /* Efeito suave ao passar o mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.compra-item h3 {
+    font-size: 1.1em; /* Reduzido o tamanho da fonte */
+    margin-bottom: 8px;
+}
+
+.compra-item p {
+    font-size: 0.9em; /* Reduzido o tamanho da fonte do texto */
+    margin: 5px 0;
+}
+
+.compra-item strong {
+    font-weight: 700;
+}
+
+/* Detalhes adicionais ocultos */
+.compra-item .detalhes {
+    display: none;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.compra-item .detalhes p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+/* Botão Voltar ao Topo */
+.back-to-top-btn {
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #009d88; /* Cor do botão voltar ao topo */
+    color: #fff;
+    padding: 10px 15px; /* Ajuste no padding */
+    border-radius: 50%;
+    font-size: 1.3em; /* Ajuste no tamanho da fonte */
+    text-decoration: none;
+    width: 50px;
+    height: 50px;
+    line-height: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top-btn:hover {
+    background-color: #45d0bd; /* Cor do hover do botão voltar ao topo */
+}
+
+/* Estilo de links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    #barra-pesquisa input[type="text"] {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    #barra-pesquisa form {
+        width: 100%;
+    }
+
+    nav.navbar ul {
+        flex-direction: column;
+    }
+
+    nav.navbar ul li {
+        text-align: center;
+        margin: 5px 0;
+    }
+}

@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Carro</title>
+
+    <!-- Fonte e Estilos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'carros/adicionar_carro.css' %}">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header id="inicio">
+        <h1>Adicionar Novo Carro</h1>
+    </header>
+
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'adicionar_carro' %}">Adicionar Carro</a></li>
+            <li><a href="{% url 'remover_carro' %}">Remover Carro</a></li>
+            <li><a href="{% url 'editar_carro' 0 %}">Editar Carro</a></li>
+            <li><a href="{% url 'historico_compras' %}">Histórico de Compras</a></li>
+        </ul>
+    </nav>
+
+    <!-- Tutorial -->
+    <section id="tutorial">
+        <h2>Como Adicionar um Carro</h2>
+        <p>Este formulário permite adicionar um novo carro ao sistema. Siga os passos abaixo para preencher as informações corretamente:</p>
+        <ul>
+            <li><strong>Nome do Carro:</strong> Insira o nome do modelo do carro (Ex: Corolla).</li>
+            <li><strong>Marca:</strong> Coloque a marca do carro (Ex: Toyota).</li>
+            <li><strong>Ano:</strong> Informe o ano de fabricação do carro (Ex: 2022). Certifique-se de que o valor esteja entre 1900 e o ano atual.</li>
+            <li><strong>Preço:</strong> Preencha o preço do carro em reais (Ex: 75000.00).</li>
+            <li><strong>Imagem:</strong> Adicione uma imagem do carro para representar visualmente o modelo.</li>
+            <li><strong>Descrição:</strong> Dê uma breve descrição do carro, incluindo detalhes importantes como condições e características especiais.</li>
+        </ul>
+        <p>Após preencher todos os campos, clique no botão <strong>"Adicionar Carro"</strong> para salvar o carro no sistema.</p>
+    </section>
+
+    <!-- Formulário -->
+    <section id="formulario">
+        <h2>Preencha os Dados do Carro</h2>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'adicionar_carro' %}">
+            {% csrf_token %}
+
+            <!-- Nome -->
+            <div class="form-group">
+                <label for="nome">Nome do Carro:</label>
+                <input type="text" id="nome" name="nome" placeholder="Ex: Corolla" required>
+            </div>
+
+            <!-- Marca -->
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" name="marca" placeholder="Ex: Toyota" required>
+            </div>
+
+            <!-- Ano -->
+            <div class="form-group">
+                <label for="ano">Ano:</label>
+                <input type="number" id="ano" name="ano" min="1900" max="2100" placeholder="Ex: 2022" required>
+            </div>
+
+            <!-- Preço -->
+            <div class="form-group">
+                <label for="preco">Preço (R$):</label>
+                <input type="number" id="preco" name="preco" step="0.01" placeholder="Ex: 75000.00" required>
+            </div>
+
+            <!-- Imagem -->
+            <div class="form-group">
+                <label for="imagem">Imagem do Carro:</label>
+                <input type="file" id="imagem" name="imagem" accept="image/*" required>
+            </div>
+
+            <!-- Descrição -->
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="4" placeholder="Descreva o carro..." required></textarea>
+            </div>
+
+            <!-- Botão -->
+            <div class="form-group">
+                <button type="submit">Adicionar Carro</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Se um carro foi adicionado, exibir uma mensagem de confirmação -->
+    {% if carro.id %}
+        <section>
+            <p>Carro adicionado com sucesso!</p>
+        </section>
+    {% endif %}
+</body>
+</html>

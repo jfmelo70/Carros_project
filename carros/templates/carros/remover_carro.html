@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Carros</title>
+
+    <!-- Fonte e Estilos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'carros/remover_carro.css' %}">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <h1>Remover Carros</h1>
+    </header>
+
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'adicionar_carro' %}">Adicionar Carro</a></li>
+            <li><a href="{% url 'remover_carro' %}">Remover Carro</a></li>
+            <li><a href="{% url 'editar_carro' 0 %}">Editar Carro</a></li> 
+            <li><a href="{% url 'historico_compras' %}">Histórico de Compras</a></li>
+        </ul>
+    </nav>
+
+    <!-- Barra de Pesquisa -->
+    <section id="search-bar">
+        <form method="GET" action="{% url 'remover_carro' %}">
+            <input type="text" name="query" placeholder="Pesquise por nome, marca ou ano" value="{{ request.GET.query|default_if_none:'' }}">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </section>
+
+    <!-- Tutorial Explicativo -->
+    <section id="tutorial">
+        <p>Antes de selecionar os carros para remoção, entenda as cores que indicam os carros vendidos e não vendidos:</p>
+        <ul>
+            <li><strong class="vermelho">Vermelho claro</strong>: Carros vendidos, já não estão disponíveis para compra.</li>
+            <li><strong class="verde">Verde claro</strong>: Carros não vendidos, estão disponíveis para compra.</li>
+        </ul>
+        <p>Você pode remover tanto carros vendidos quanto carros não vendidos, caso deseje. Marque os carros que você deseja remover da lista de acordo com a sua disponibilidade.</p>
+    </section>
+
+    <!-- Lista de Carros Disponíveis para Remoção -->
+    <section id="lista-carros">
+        <h2>Selecione os Carros para Remover</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="carros">
+                {% for carro in carros %}
+                    <div class="carro-item {% if carro.vendido %} vendido {% else %} nao-vendido {% endif %}">
+                        <input type="checkbox" id="carro_{{ carro.id }}" name="carros_remover" value="{{ carro.id }}">
+                        <label for="carro_{{ carro.id }}">
+                            <strong>{{ carro.nome }}</strong> - {{ carro.marca }} ({{ carro.ano }})<br>
+                            <span>Preço: R$ {{ carro.preco }}</span>
+                        </label>
+                    </div>
+                {% empty %}
+                    <div class="mensagem-erro">
+                        Nenhum carro foi encontrado para remover. Tente ajustar os filtros de busca.
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Botão -->
+            <div class="form-group">
+                <button type="submit">Remover Selecionados</button>
+            </div>
+        </form>
+    </section>
+
+</body>
+</html>

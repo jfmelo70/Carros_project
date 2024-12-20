@@ -1,0 +1,299 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007a6a;
+    color: white;
+    text-align: center;
+    padding: 15px 0; /* Ajuste de espaço interno */
+    margin: 0; /* Remove qualquer margem */
+}
+
+.navbar {
+    background-color: #007a6a; /* Cor ligeiramente diferente para criar contraste */
+    padding: 10px 20px;
+    margin: 0; /* Remove margens entre o header e a navbar */
+    display: flex; /* Flexbox para alinhar conteúdo */
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Estilo de itens na barra de navegação */
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centraliza os itens horizontalmente */
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li:last-child {
+    margin-right: 0; /* Remove a margem do último item */
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    font-size: 16px;
+}
+
+.navbar ul li a:hover {
+    color: #45d0bd;
+}
+
+#barra-pesquisa {
+    max-width: 600px; /* Largura máxima da barra de pesquisa */
+    margin: 20px auto;
+    text-align: center;
+}
+
+#barra-pesquisa form {
+    display: flex;
+    justify-content: space-between; /* Alinha o input e o botão com espaço entre eles */
+    align-items: center; /* Alinha verticalmente */
+    gap: 10px; /* Espaço entre o campo de texto e o botão */
+}
+
+#barra-pesquisa input {
+    width: calc(100% - 130px); /* Faz o input ocupar 100% da largura, menos a largura do botão */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Faz com que o padding seja contado dentro da largura */
+    min-width: 200px; /* Garante que o campo de pesquisa não fique pequeno demais */
+}
+
+#barra-pesquisa button {
+    width: 120px; /* Define uma largura fixa para o botão */
+    padding: 10px 20px;
+    background-color: #007a6a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#barra-pesquisa button:hover {
+    background-color: #005f50;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    #barra-pesquisa form {
+        flex-direction: column; /* Empilha os itens em telas pequenas */
+        align-items: stretch; /* Faz com que o botão e o input ocupem toda a largura */
+    }
+
+    #barra-pesquisa input,
+    #barra-pesquisa button {
+        width: 100%; /* Ambos ocupam 100% da largura disponível */
+        margin-bottom: 10px; /* Adiciona espaço entre o campo de texto e o botão */
+    }
+}
+
+#tutorial {
+    max-width: 900px; /* Aumentando a largura máxima */
+    margin: 40px auto; /* Espaço maior ao redor do tutorial */
+    padding: 25px; /* Aumentando o preenchimento interno */
+    background-color: #ffffffa8; /* Cor de fundo branca */
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra mais intensa */
+    font-size: 16px; /* Tamanho de fonte mais legível */
+    color: #333; /* Cor do texto escura para melhor contraste */
+    line-height: 1.6; /* Melhor espaçamento entre as linhas para maior legibilidade */
+}
+
+#tutorial h2 {
+    font-size: 28px; /* Tamanho maior para o título */
+    margin-bottom: 20px; /* Maior espaço abaixo do título */
+    color: #007a6a; /* Cor que combina com o esquema do site */
+    text-align: center; /* Centralizar o título */
+    font-weight: bold; /* Tornando o título mais chamativo */
+}
+
+#tutorial ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc; /* Usando lista com marcadores */
+}
+
+#tutorial li {
+    margin-bottom: 12px; /* Espaço maior entre os itens da lista */
+    font-size: 16px; /* Tamanho de fonte mais legível */
+}
+
+#tutorial li strong {
+    color: #007a6a; /* Destacando os itens importantes */
+}
+
+#tutorial p {
+    font-size: 16px;
+    color: #555; /* Cor mais suave para parágrafos */
+    margin-top: 15px; /* Espaço maior acima dos parágrafos */
+}
+
+/* Estilo para links dentro do tutorial */
+#tutorial a {
+    color: #007a6a; /* Cor que se destaca */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#tutorial a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+#lista-carros {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#lista-carros h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.carro-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Efeito de brilho verde suave ao passar o mouse */
+.carro-item:hover {
+    background-color: rgba(0, 122, 106, 0.1); /* Fundo ligeiramente verde */
+    box-shadow: 0 0 15px 5px rgba(0, 122, 106, 0.5); /* Brilho suave na borda */
+    transform: scale(1.05); /* Aumenta um pouco o tamanho */
+}
+
+/* Estilo para carro vendido */
+.carro-vendido {
+    background-color: #f8d7da; /* Cor de fundo vermelha suave */
+    border: 1px solid #f5c6cb; /* Borda vermelha suave */
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+    pointer-events: none; /* Impede qualquer interação com o carro vendido */
+}
+
+/* Mudando o estilo ao passar o mouse sobre o carro vendido */
+.carro-vendido:hover {
+    cursor: not-allowed; /* Indica que o item não pode ser interagido */
+}
+
+/* Ícone de bloqueio no carro vendido */
+.carro-vendido::after {
+    content: "🔒"; /* Ícone de bloqueio */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    font-size: 24px; /* Tamanho do ícone */
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    color: #721c24; /* Cor do ícone */
+}
+
+.carro-vendido h3,
+.carro-vendido p,
+.carro-vendido em {
+    color: #721c24; /* Texto vermelho */
+}
+
+.carro-vendido em {
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007a6a;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-bottom: 10px; /* Espaço abaixo do botão */
+}
+
+button:hover {
+    background-color: #005f50;
+}
+
+/* Estilização específica para o botão Cancelar */
+button.cancelar {
+    background-color: #d9534f; /* Cor vermelha */
+    margin-top: 10px;
+}
+
+button.cancelar:hover {
+    background-color: #c12e2a; /* Tom mais escuro de vermelho */
+}
+
+#form-editar-carro {
+    margin: 30px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#form-editar-carro form {
+    display: flex;
+    flex-direction: column;
+}
+
+#form-editar-carro .form-group {
+    margin-bottom: 20px;
+}
+
+#form-editar-carro button {
+    width: auto;
+    margin: 10px 0;
+}
+
+/* Estilo para exibir o formulário de edição */
+#form-editar-carro {
+    display: none;
+}

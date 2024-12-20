@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Carro</title>
+    <link rel="stylesheet" href="{% static 'carros/style.css' %}">
+</head>
+<body>
+    <!-- Cabeçalho com o nome e ano do carro -->
+    <header>
+        <h1>{{ carro.nome }} - {{ carro.ano }}</h1>
+    </header>
+
+    <!-- Detalhes do Carro -->
+    <div class="carro-detalhes">
+        <img src="{% if carro.imagem %}{{ carro.imagem.url }}{% else %}{% static 'carros/default-image.png' %}{% endif %}" alt="{{ carro.nome }}" style="width: 100%; height: auto; border-radius: 5px;">
+        <p><strong>Marca:</strong> {{ carro.marca }}</p>
+        <p><strong>Descrição:</strong> {{ carro.descricao }}</p>
+        <p><strong>Preço:</strong> R$ {% if carro.preco %}{{ carro.preco|floatformat:2 }}{% else %}Não disponível{% endif %}</p>
+
+        <!-- Botão de compra, condicionado à disponibilidade do carro -->
+        {% if carro.em_estoque %}
+            <a href="{% url 'comprar_carro' carro.id %}" class="comprar-btn">Comprar Agora</a>
+        {% else %}
+            <button class="btn btn-danger" disabled>Indisponível</button>
+        {% endif %}
+    </div>
+
+    <!-- Botão Voltar -->
+    <a href="#carros" class="back-to-top-btn" aria-label="Voltar para os carros">
+        <span>^</span> Voltar para a lista de carros
+    </a>
+</body>
+</html>

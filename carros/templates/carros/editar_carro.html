@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Carros</title>
+
+    <!-- Fonte e Estilos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'carros/editar_carro.css' %}">
+    
+    <style>
+        
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header id="inicio">
+        <h1>Editar Informações dos Carros</h1>
+    </header>
+
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'adicionar_carro' %}">Adicionar Carro</a></li>
+            <li><a href="{% url 'remover_carro' %}">Remover Carro</a></li>
+            <li><a href="{% url 'editar_carro' 0 %}">Editar Carro</a></li>
+            <li><a href="{% url 'historico_compras' %}">Histórico de Compras</a></li>
+        </ul>
+    </nav>
+
+    <!-- Barra de Pesquisa -->
+    <section id="barra-pesquisa">
+        <form method="GET" action="{% url 'editar_carro' 0 %}#lista-carros">
+            <input type="text" name="query" id="pesquisar" placeholder="Pesquise pelo nome, ano ou marca do carro..." value="{{ query|default:'' }}">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </section>
+    
+    <!-- Tutorial Explicativo -->
+    <section id="tutorial">
+        <p>Para editar as informações de um carro, basta selecionar o carro da lista abaixo. Você poderá alterar os seguintes dados:</p>
+        <ul>
+            <li><strong>Nome do Carro</strong>: Altere o nome do carro conforme necessário.</li>
+            <li><strong>Marca</strong>: Modifique a marca do carro se necessário.</li>
+            <li><strong>Ano</strong>: Atualize o ano do carro se houver uma mudança.</li>
+            <li><strong>Preço</strong>: Defina o preço do carro conforme o valor atual.</li>
+            <li><strong>Imagem</strong>: Caso queira atualizar a imagem do carro, basta selecionar um novo arquivo.</li>
+            <li><strong>Descrição</strong>: Edite a descrição do carro para refletir as informações mais recentes.</li>
+        </ul>
+        <p>Depois de editar as informações, clique em "Salvar Alterações" para registrar as mudanças.</p>
+    </section>
+
+    <!-- Lista de Carros para Edição -->
+    <section id="lista-carros">
+        <h2>Selecione um Carro para Editar</h2>
+        {% for carro in carros %}
+            {% if not carro.vendido %} <!-- Verifica se o carro não foi vendido -->
+            <div class="carro-item" onclick="document.getElementById('form_{{ carro.id }}').style.display = 'block';">
+                <h3>{{ carro.nome }}</h3>
+                <p><strong>Marca:</strong> {{ carro.marca }}</p>
+                <p><strong>Ano:</strong> {{ carro.ano }}</p>
+                <p><strong>Preço:</strong> R$ {{ carro.preco }}</p>
+                <p><strong>Descrição:</strong> {{ carro.descricao }}</p>
+            </div>
+
+            <!-- Formulário de Edição do Carro -->
+            <div id="form_{{ carro.id }}" class="carro-form" style="display:none;">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'editar_carro' carro.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="nome_{{ carro.id }}">Nome do Carro:</label>
+                        <input type="text" id="nome_{{ carro.id }}" name="nome" value="{{ carro.nome }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marca_{{ carro.id }}">Marca:</label>
+                        <input type="text" id="marca_{{ carro.id }}" name="marca" value="{{ carro.marca }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ano_{{ carro.id }}">Ano:</label>
+                        <input type="number" id="ano_{{ carro.id }}" name="ano" value="{{ carro.ano }}" min="1900" max="2100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preco_{{ carro.id }}">Preço (R$):</label>
+                        <input type="number" id="preco_{{ carro.id }}" name="preco" value="{{ carro.preco }}" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagem_{{ carro.id }}">Imagem do Carro:</label>
+                        <input type="file" id="imagem_{{ carro.id }}" name="imagem" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao_{{ carro.id }}">Descrição:</label>
+                        <textarea id="descricao_{{ carro.id }}" name="descricao" rows="4" required>{{ carro.descricao }}</textarea>
+                    </div>
+                    <button type="submit">Salvar Alterações</button>
+                    <button type="button" class="cancelar" onclick="document.getElementById('form_{{ carro.id }}').style.display = 'none';">Cancelar</button>
+                </form>
+            </div>
+            {% else %}
+
+            <!-- Exibe uma mensagem com estilo vermelho caso o carro tenha sido vendido -->
+            <div class="carro-item carro-vendido">
+                <h3>{{ carro.nome }} (Vendido)</h3>
+                <p><strong>Marca:</strong> {{ carro.marca }}</p>
+                <p><strong>Ano:</strong> {{ carro.ano }}</p>
+                <p><strong>Preço:</strong> R$ {{ carro.preco }}</p>
+                <p><strong>Descrição:</strong> {{ carro.descricao }}</p>
+                <p><em>Este carro já foi vendido e não pode ser editado.</em></p>
+            </div>
+            {% endif %}
+        {% empty %}
+        <p>Nenhum carro disponível para edição.</p>
+        {% endfor %}
+    </section>
+
+    <script>
+        // Função para esconder o formulário ao clicar fora dele
+        window.onclick = function(event) {
+            if (!event.target.closest('.carro-item') && !event.target.closest('.carro-form')) {
+                document.querySelectorAll('.carro-form').forEach(function(form) {
+                    form.style.display = 'none';
+                });
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+/* Reset de estilo para manter consistência */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo para o corpo */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f9f9f9f4; /* Cor de fundo neutra */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para o cabeçalho */
+header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #007a6a;
+}
+
+header h1 {
+    font-size: 36px;
+    color: white;
+}
+
+/* Estilo para a barra de navegação */
+.navbar {
+    background-color: #007a6a;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar ul li {
+    display: inline;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    background-color: #45d0bd;
+}
+
+/* Estilo para o conteúdo do tutorial */
+#tutorial {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#tutorial h2 {
+    font-size: 28px;
+    color: #007a6a;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#tutorial p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+#tutorial ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#tutorial ul li {
+    font-size: 16px;
+    color: #555;
+}
+
+#tutorial code {
+    background-color: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #333;
+}
+
+/* Estilo para o formulário no tutorial */
+#formulario {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#formulario h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #009d88;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #45d0bd;
+    outline: none;
+}
+
+#formulario button {
+    background-color: #007a6a;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+#formulario button:hover {
+    background-color: #45d0bd;
+}
+
+/* Estilo para a mensagem de sucesso */
+section p {
+    text-align: center;
+    font-size: 18px;
+    color: green;
+    font-weight: bold;
+}
+
+/* Adicionando responsividade */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar ul li {
+        margin-bottom: 10px;
+    }
+
+    #formulario {
+        padding: 15px;
+    }
+}

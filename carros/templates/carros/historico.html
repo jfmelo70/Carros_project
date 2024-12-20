@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Compras</title>
+
+    <!-- Fonte e Estilos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'carros/historico.css' %}">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header id="inicio">
+        <h1>Histórico de Compras</h1>
+    </header>
+
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'adicionar_carro' %}">Adicionar Carro</a></li>
+            <li><a href="{% url 'remover_carro' %}">Remover Carro</a></li>
+            <li><a href="{% url 'editar_carro' 0 %}">Editar Carro</a></li>
+            <li><a href="{% url 'historico_compras' %}">Histórico de Compras</a></li>
+        </ul>
+    </nav>
+
+    <!-- Barra de Pesquisa -->
+    <section id="barra-pesquisa">
+        <form method="GET" action="{% url 'historico_compras' %}#lista-compras">
+            <input type="text" name="query" id="pesquisar" placeholder="Pesquise pelo nome do comprador ou carro..." value="{{ query|default:'' }}">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </section>
+
+    <!-- Tutorial Explicativo -->
+    <section id="tutorial">
+        <p>Confira abaixo o histórico de compras realizadas na JF Motors. Para cada compra, você verá as informações do comprador, carro adquirido, preço e data da compra.</p>
+    </section>
+
+    <!-- Lista de Compras -->
+    <section id="lista-compras">
+        <h2>Compras Recentes</h2>
+
+        {% for compra in compras %}
+            <div class="compra-item" onclick="toggleDetails('{{ compra.id }}')">
+                <h3>{{ compra.nome_cliente }} - {{ compra.carro.nome }} ({{ compra.carro.ano }})</h3>
+                <p><strong>Marca:</strong> {{ compra.carro.marca }}</p>
+                <p><strong>Preço:</strong> <span class="preco">R$ {{ compra.carro.preco|floatformat:2 }}</span></p>
+                <p><strong>Descrição:</strong> {{ compra.carro.descricao }}</p>
+                <p><strong>Data da Compra:</strong> {{ compra.data_compra|date:"d/m/Y" }}</p>
+                <p><strong>Contato:</strong> {{ compra.numero_cliente }} / {{ compra.email_cliente }}</p>
+                <p><strong>Endereço:</strong> {{ compra.endereco_cliente }}</p>
+
+                <!-- Detalhes adicionais ocultos -->
+                <div class="detalhes" id="detalhes-{{ compra.id }}">
+                    <p><strong>Detalhes da Compra:</strong></p>
+                    <p><strong>Pagamento:</strong> {{ compra.metodo_pagamento }}</p>
+                    <p><strong>Observações:</strong> {{ compra.observacoes }}</p>
+                    <p><strong>Status:</strong> {{ compra.status_compra }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>Nenhuma compra registrada no momento.</p>
+        {% endfor %}
+    </section>
+
+    <script>
+        function toggleDetails(compraId) {
+            var detalhes = document.getElementById('detalhes-' + compraId);
+            if (detalhes.style.display === 'none' || detalhes.style.display === '') {
+                detalhes.style.display = 'block';
+            } else {
+                detalhes.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>

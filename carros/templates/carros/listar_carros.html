@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carros à Venda</title>
+    
+    <!-- Adicionando a fonte Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'carros/style.css' %}">
+</head>
+<body>
+    <!-- Cabeçalho da Página -->
+    <header id="inicio">
+        <h1>Encontre o Carro dos Seus Sonhos</h1>
+        <p>Veja nossa seleção de veículos exclusivos para você!</p>
+    </header>
+
+    <!-- Barra de Navegação -->
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="/" class="inicio-btn">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#carros">Carros</a></li>
+            <li><a href="#contatos">Contatos</a></li>
+        </ul>
+    </nav>
+
+    <!-- Banner -->
+    <section id="banner" style="background-image: url('{% static 'carros/imagens/banner.jpg' %}');">
+        <div class="banner-content">
+            <h2>Bem-vindo à Nossa Concessionária!</h2>
+            <p>Encontre o veículo ideal para você.</p>
+            <a href="#sobre" class="saber-mais-btn">Saber Mais</a>
+        </div>
+    </section>
+
+    <!-- Faixa de Separação (Sobre) -->
+    <section id="faixa-separacao" class="faixa-separacao">
+        <h2>Sobre</h2>
+    </section>
+
+    <!-- Seção Sobre -->
+    <section id="sobre" style="background-image: url('{% static 'carros/imagens/sobre-nos.jpg' %}');">
+        <h2>Sobre a JF Motors</h2>
+        <div class="sobre-container">
+            <div class="sobre-texto">
+                <p><strong>Quem Somos?</strong></p>
+                <p>Na JF Motors, somos apaixonados por carros e pelo que eles representam para as pessoas. Com mais de 10 anos de experiência no mercado automotivo, nossa missão é oferecer veículos de alta qualidade, selecionados cuidadosamente para atender às suas necessidades e desejos. Seja você um entusiasta de carros ou alguém em busca de seu primeiro veículo, temos a opção ideal para você.</p>
+            </div>
+            <div class="sobre-missao">
+                <p><strong>Missão:</strong> Oferecer uma experiência de compra única, com veículos de confiança e atendimento personalizado.</p>
+            </div>
+            <div class="sobre-visao">
+                <p><strong>Visão:</strong> Ser a referência no mercado de veículos, reconhecida pela excelência no atendimento e na qualidade dos carros que oferecemos.</p>
+            </div>
+            <div class="sobre-valores">
+                <p><strong>Valores:</strong> Compromisso com a transparência, integridade e respeito ao cliente. Acreditamos que cada veículo que vendemos deve ser uma verdadeira escolha para os nossos clientes.</p>
+            </div>
+        </div>
+
+        <div class="chamada-acao">
+            <p>Venha nos visitar e confira nosso estoque! Encontre o carro dos seus sonhos com o melhor atendimento.</p>
+            <a href="#carros" class="saber-mais-btn">Confira nossos Carros</a>
+        </div>
+    </section>
+
+    <!-- Faixa de Separação (Carros à Venda) -->
+    <section id="faixa-carros" class="faixa-separacao">
+        <h2>Carros à Venda</h2>
+    </section>
+
+    <!-- Barra de Pesquisa -->
+    <div class="search-bar">
+        <form method="GET" action="{% url 'listar_carros' %}#carros">
+            <input type="text" name="query" placeholder="Pesquise por marca, modelo ou ano..." value="{{ query }}">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </div>
+
+    <!-- Resultados de Pesquisa -->
+    <div id="carros" class="carros-container">
+        {% if carros %}
+            {% for carro in carros %}
+                <div class="carro-card" onclick="openModal('{{ carro.id }}')">
+                    <img src="{% if carro.imagem %}{{ carro.imagem.url }}{% else %}{% static 'carros/default-image.png' %}{% endif %}" alt="{{ carro.nome }}" class="carro-img">
+                    <div class="carro-info">
+                        <h3>{{ carro.nome }} - {{ carro.ano }}</h3>
+                        <p>Marca: {{ carro.marca }}</p>
+                        <p>Preço: R$ {% if carro.preco %}{{ carro.preco }}{% else %}Não disponível{% endif %}</p>
+                        {% if carro.vendido %}
+                            <button class="indisponivel-btn">Indisponível</button>
+                        {% elif not carro.em_estoque %}
+                            <p class="indisponivel">Carro fora de estoque</p>
+                        {% else %}
+                            <a href="javascript:void(0);" onclick="openModalCompra('{{ carro.id }}', '{{ carro.nome }}')" class="comprar-btn">Comprar</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div id="modal-{{ carro.id }}" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close-btn" onclick="closeModal('{{ carro.id }}')">&times;</span>
+                        <h2>{{ carro.nome }} - {{ carro.ano }}</h2>
+                        <img src="{% if carro.imagem %}{{ carro.imagem.url }}{% else %}{% static 'carros/default-image.png' %}{% endif %}" alt="{{ carro.nome }}" id="detalhes_imagem">
+                        <p>Marca: {{ carro.marca }}</p>
+                        <p>Preço: R$ {% if carro.preco %}{{ carro.preco }}{% else %}Não disponível{% endif %}</p>
+                        <p>Descrição: {{ carro.descricao }}</p>
+                        {% if carro.vendido %}
+                            <button class="indisponivel-btn">Indisponível</button>
+                        {% elif not carro.em_estoque %}
+                            <p class="indisponivel">Carro fora de estoque</p>
+                        {% else %}
+                            <a href="javascript:void(0);" onclick="openModalCompra('{{ carro.id }}', '{{ carro.nome }}')" class="comprar-btn">Comprar</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Mensagem de erro se nenhum carro for encontrado -->
+            <p class="no-results">Ops! Nenhum carro foi encontrado para a sua pesquisa. Tente usar outros termos.</p>
+        {% endif %}
+    </div>
+
+    <!-- Modal de Compra -->
+    <div id="modal-compra" class="modal-compra" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModalCompra()">&times;</span>
+            <h2>Finalizar Compra</h2>
+            <form id="compra-form" method="POST" action="{% url 'comprar_carro' 0 %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" name="telefone" placeholder="Seu telefone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Seu email" required>
+                </div>
+                <div class="form-group">
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="endereco" name="endereco" placeholder="Seu endereço" required>
+                </div>
+                <button type="submit" class="comprar-btn">Finalizar Compra</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Formulário de Contato -->
+    <section id="formulario-contato">
+        <h2>Entre em Contato</h2>
+        <p>Tem alguma dúvida ou deseja saber mais? Preencha o formulário abaixo e entraremos em contato o mais breve possível.</p>
+        <form action="{% url 'enviar_contato' %}" method="post" class="formulario-contato">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Seu email" required>
+            </div>
+            <div class="form-group">
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" rows="4" placeholder="Digite sua mensagem aqui" required></textarea>
+            </div>
+            <button type="submit" class="enviar-btn">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Seção de Contatos -->
+    <section id="contatos">
+        <h2>Contatos</h2>
+        <div class="contatos-container">
+            <div class="contato-item">
+                <h3>Email</h3>
+                <p>jfmlucio@gmail.com</p>
+            </div>
+            <div class="contato-item">
+                <h3>Telefone</h3>
+                <p>(99) 9999-9999</p>
+            </div>
+            <div class="contato-item">
+                <h3>Redes Sociais</h3>
+                <p>
+                    <a href="https://www.instagram.com/jfmelo70/?hl=pt-br" target="_blank">Instagram</a> | 
+                    <a href="https://www.linkedin.com/in/joaquim-francisco-856a7224b/" target="_blank">LinkedIn</a>
+                </p>
+            </div>
+            <div class="contato-item">
+                <h3>Direitos Reservados</h3>
+                <p>&copy; 2024 JF Motors</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Botão Voltar para o Topo -->
+    <a href="#inicio" class="back-to-top-btn" aria-label="Voltar para o início">
+        <span>^</span>
+    </a>
+
+    <script>
+        function openModal(id) {
+            var modal = document.getElementById('modal-' + id);
+            modal.style.display = 'flex'; // Mostrar a modal quando o usuário clicar no carro
+        }
+
+        function closeModal(id) {
+            var modal = document.getElementById('modal-' + id);
+            modal.style.display = 'none'; // Fechar a modal
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none'; // Fechar modal ao clicar fora dela
+            }
+        }
+
+        function openModalCompra(carroId, nomeCarro) {
+            document.getElementById('compra-form').action = "{% url 'comprar_carro' 0 %}".replace("0", carroId);
+            document.getElementById('modal-compra').style.display = 'flex'; // Mostra o modal de compra
+            document.getElementById('nome').value = nomeCarro;
+        }
+
+        function closeModalCompra() {
+            document.getElementById('modal-compra').style.display = 'none'; // Fecha o modal de compra
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-compra')) {
+                closeModalCompra(); // Fecha o modal ao clicar fora dele
+            }
+        }
+    </script>
+</body>
+</html>
